@@ -263,7 +263,7 @@ def run_full_pipeline():
     os.makedirs("output/models", exist_ok=True)
     with open("output/models/vectorizer.pkl", "wb") as f:
         pickle.dump(vectorizer, f)
-    print("  Saved → output/models/vectorizer.pkl")
+    print("  Saved -> output/models/vectorizer.pkl")
 
     # ── Step 5: Threat Reporting ───────────────────────────────────────────
     print("\n[Step 5/5] Threat Reporting")

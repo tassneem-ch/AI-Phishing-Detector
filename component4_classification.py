@@ -195,7 +195,7 @@ def save_model(model, filename):
     os.makedirs(os.path.dirname(filename), exist_ok=True)
     with open(filename, "wb") as f:
         pickle.dump(model, f)
-    print(f"  Saved → {filename}")
+    print(f"  Saved -> {filename}")
 
 
 def load_model(filename):
@@ -253,7 +253,7 @@ def run_classification(X_train, X_test, y_train, y_test,
         })
         os.makedirs("output", exist_ok=True)
         preds_df.to_csv("output/predictions.csv", index=False)
-        print("  Saved → output/predictions.csv")
+        print("  Saved -> output/predictions.csv")
 
     return lr_model, rf_model, [lr_results, rf_results]
 

@@ -74,14 +74,14 @@ def build_single_report(email_text, clean_text, threat_score,
         A formatted multi-line string report.
     """
     lines = []
-    sep   = "─" * 56
+    sep   = "-" * 56
 
     # ── Header ────────────────────────────────────────────────────────────────
     lines.append(sep)
     if verdict == 1:
-        lines.append("  ⚠  VERDICT: PHISH  (Malicious Email Detected)")
+        lines.append("  [!] VERDICT: PHISH  (Malicious Email Detected)")
     else:
-        lines.append("  ✓  VERDICT: HAM   (Email Appears Legitimate)")
+        lines.append("  [OK] VERDICT: HAM   (Email Appears Legitimate)")
 
     lines.append(f"  Threat Score : {threat_score * 100:.1f}%")
     lines.append(f"  Risk Level   : {score_to_risk(threat_score)}")
@@ -109,37 +109,37 @@ def build_single_report(email_text, clean_text, threat_score,
 
     # Urgency
     u = int(hc.get("urgency_score", 0))
-    flag = "⚠" if u > 0 else "✓"
+    flag = "[!]" if u > 0 else "[OK]"
     lines.append(f"  {flag}  Urgency keywords       : {u} hit(s)")
 
     # Threat language
     t = int(hc.get("threat_score", 0))
-    flag = "⚠" if t > 0 else "✓"
+    flag = "[!]" if t > 0 else "[OK]"
     lines.append(f"  {flag}  Threat/fear language   : {t} hit(s)")
 
     # Reward language
     r = int(hc.get("reward_score", 0))
-    flag = "⚠" if r > 0 else "✓"
+    flag = "[!]" if r > 0 else "[OK]"
     lines.append(f"  {flag}  Reward/greed language  : {r} hit(s)")
 
     # Link count
     lc = int(hc.get("link_count", 0))
-    flag = "⚠" if lc > 3 else "✓"
+    flag = "[!]" if lc > 3 else "[OK]"
     lines.append(f"  {flag}  URLs found             : {lc}")
 
     # Suspicious link
     sl = int(hc.get("suspicious_link_flag", 0))
-    flag = "⚠" if sl else "✓"
+    flag = "[!]" if sl else "[OK]"
     lines.append(f"  {flag}  Suspicious URL detected: {'YES — possible domain spoofing / typosquatting' if sl else 'No'}")
 
     # Sender mismatch
     sm = int(hc.get("sender_mismatch_flag", 0))
-    flag = "⚠" if sm else "✓"
+    flag = "[!]" if sm else "[OK]"
     lines.append(f"  {flag}  Sender spoofing        : {'YES — display name vs domain mismatch' if sm else 'No'}")
 
     # Reply-To mismatch
     rm = int(hc.get("replyto_mismatch_flag", 0))
-    flag = "⚠" if rm else "✓"
+    flag = "[!]" if rm else "[OK]"
     lines.append(f"  {flag}  Reply-To hijacking     : {'YES — replies redirected to different address' if rm else 'No'}")
 
     lines.append(sep)
@@ -148,12 +148,12 @@ def build_single_report(email_text, clean_text, threat_score,
     if verdict == 1:
         lines.append("  RECOMMENDED ACTION:")
         if threat_score >= 0.85:
-            lines.append("  → Quarantine immediately. Do NOT click any links.")
-            lines.append("  → Report to your IT/Security team.")
+            lines.append("  -> Quarantine immediately. Do NOT click any links.")
+            lines.append("  -> Report to your IT/Security team.")
         elif threat_score >= 0.65:
-            lines.append("  → Flag for manual review. Avoid clicking links.")
+            lines.append("  -> Flag for manual review. Avoid clicking links.")
         else:
-            lines.append("  → Monitor. Treat with caution.")
+            lines.append("  -> Monitor. Treat with caution.")
     else:
         lines.append("  RECOMMENDED ACTION: No threat detected. Email delivered.")
 
@@ -240,7 +240,7 @@ def print_security_summary(y_true, y_pred, y_proba, model_name="Best Model"):
         tn, fp, fn, tp = cm.ravel()
         print()
         print(f"  Attacks correctly detected (TP)   : {tp}")
-        print(f"  Attacks missed         (FN) ⚠     : {fn}  ← security failures")
+        print(f"  Attacks missed         (FN) [!]   : {fn}  <- security failures")
         print(f"  False alarms           (FP)        : {fp}")
         print(f"  Legitimate emails correctly passed : {tn}")
     print("=" * 56)
@@ -286,7 +286,7 @@ def _plot_confusion_matrix(cm):
     path = "output/confusion_matrix.png"
     plt.savefig(path, dpi=150, bbox_inches="tight")
     plt.close()
-    print(f"\n  Confusion matrix saved → {path}")
+    print(f"\n  Confusion matrix saved -> {path}")
 
 
 # ─── Save Full Report to File ─────────────────────────────────────────────────
@@ -319,7 +319,7 @@ def save_report(all_reports, y_true, y_pred, y_proba, model_name):
         f.write(f"Recall       : {rec * 100:.2f}%\n")
         f.write(f"F1-Score     : {f1 * 100:.2f}%\n")
 
-    print(f"  Full threat report saved → {path}")
+    print(f"  Full threat report saved -> {path}")
 
 
 # ─── Demo ─────────────────────────────────────────────────────────────────────

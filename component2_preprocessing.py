@@ -176,7 +176,7 @@ if __name__ == "__main__":
         print(train_df["clean_text"].iloc[0][:300])
 
         train_df.to_csv("output/train_clean.csv", index=False)
-        print("\nSaved → output/train_clean.csv")
+        print("\nSaved -> output/train_clean.csv")
     else:
         # Quick standalone test
         sample = """
