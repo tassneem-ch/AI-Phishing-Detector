@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhishShield | AI Phishing Detector Demo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <span class="shield-icon">🛡️</span>
+                <h1>Phish<span>Shield</span></h1>
+            </div>
+            <nav>
+                <button id="show-examples" class="btn-secondary">View Examples</button>
+                <button id="show-educational" class="btn-secondary">How it Works</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section id="input-section">
+            <div class="card">
+                <h2>Email Analysis</h2>
+                <p class="subtitle">Paste the raw content of an email to analyze it for phishing indicators.</p>
+                <textarea id="email-input" placeholder="Paste email here..."></textarea>
+                <div class="actions">
+                    <button id="analyze-btn" class="btn-primary">Analyze Email</button>
+                    <button id="clear-btn" class="btn-text">Clear</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="results-section" class="hidden">
+            <div class="results-grid">
+                <!-- Verdict Card -->
+                <div class="card verdict-card">
+                    <div id="verdict-header">
+                        <span id="verdict-icon"></span>
+                        <h2 id="verdict-title">Analysis Result</h2>
+                    </div>
+                    <div class="score-display">
+                        <div class="score-label">Threat Score</div>
+                        <div id="threat-score-value">0%</div>
+                        <div class="score-bar-container">
+                            <div id="score-bar"></div>
+                        </div>
+                        <div id="risk-level">LOW / SAFE</div>
+                    </div>
+                </div>
+
+                <!-- Indicators Card -->
+                <div class="card indicators-card">
+                    <h3>Threat Indicators</h3>
+                    <ul id="indicators-list">
+                        <!-- Populated by JS -->
+                    </ul>
+                </div>
+
+                <!-- Educational Insight Card -->
+                <div class="card educational-card">
+                    <h3>Security Insights</h3>
+                    <div id="educational-insight">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Recommendation Card -->
+                <div class="card recommendation-card">
+                    <h3>Recommended Action</h3>
+                    <p id="action-text"></p>
+                </div>
+            </div>
+            <button id="reset-btn" class="btn-secondary">New Analysis</button>
+        </section>
+    </main>
+
+    <!-- Modals -->
+    <div id="examples-modal" class="modal hidden">
+        <div class="modal-content">
+            <header>
+                <h3>Example Emails</h3>
+                <button class="close-modal">&times;</button>
+            </header>
+            <div class="examples-list">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </div>
+
+    <div id="educational-modal" class="modal hidden">
+        <div class="modal-content">
+            <header>
+                <h3>How PhishShield Works</h3>
+                <button class="close-modal">&times;</button>
+            </header>
+            <div class="educational-content">
+                <p>Our AI analyzes multiple "signals" within an email to determine if it's a phishing attempt:</p>
+                <ul>
+                    <li><strong>Urgency & Fear:</strong> Scammers use pressure to make you act without thinking.</li>
+                    <li><strong>Greed & Rewards:</strong> Promises of free gifts or prizes are common traps.</li>
+                    <li><strong>Technical Spells:</strong> We look for domain mismatches and suspicious URL structures.</li>
+                    <li><strong>Link Analysis:</strong> Phishing often hides behind deceptive links.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 AI-Powered Phishing Detector Project. For Educational Purposes.</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
