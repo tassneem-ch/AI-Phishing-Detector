@@ -61,7 +61,7 @@ RF_PARAMS = {
 # Emails with threat probability >= this value are flagged as Phish.
 # Lowering the threshold increases Recall (catches more phishing)
 # at the cost of more false alarms. In security we prefer high Recall.
-THREAT_THRESHOLD = 0.40
+THREAT_THRESHOLD = 0.70
 
 
 # ─── Training ─────────────────────────────────────────────────────────────────

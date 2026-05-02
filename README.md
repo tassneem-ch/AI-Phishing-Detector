@@ -2,59 +2,77 @@
 
 A complete, end-to-end Machine Learning pipeline for detecting and classifying phishing emails. This cybersecurity project uses both hand-crafted threat indicators and TF-IDF statistical features to train models (Logistic Regression and Random Forest) to identify malicious emails.
 
+Now features a **Chrome Extension** for real-time protection in Gmail.
+
 ## 🚀 Pipeline Components
 
 The system is highly modular and broken down into 5 sequential components:
 
 1. **Data Ingestion (`component1_data_ingestion.py`)**  
-   Loads raw legitimate (Ham) and malicious (Phish) emails from disk, assigns threat labels, and performs a stratified split into training and test datasets.
+   Loads raw emails from disk, assigns labels, and splits data.
 2. **Pre-Processing (`component2_preprocessing.py`)**  
-   Sanitizes raw email text by stripping HTML, tokenizing URLs and email addresses, and removing English stop words to expose the true textual content.
+   Sanitizes raw email text by stripping HTML, tokenizing URLs, and removing stop words.
 3. **Threat Signal Extraction (`component3_feature_extraction.py`)**  
-   Transforms cleaned emails into a numeric feature matrix using:
-   - **Hand-crafted attack indicators:** Checks for urgency words, threat language, reward/greed language, suspicious TLDs, sender spoofing, and reply-to hijacking.
-   - **TF-IDF vectors:** Extracts the statistical importance of words across the email corpus.
+   Extracts 7 hand-crafted attack indicators and TF-IDF statistical features.
 4. **ML Classification Engine (`component4_classification.py`)**  
-   Trains and compares Logistic Regression and Random Forest models on the extracted features. Random Forest serves as the main classifier, outputting threat probabilities.
+   Trains and evaluates Logistic Regression and Random Forest models.
 5. **Threat Reporting (`component5_reporting.py`)**  
-   Translates the classifier's raw output into human-readable threat reports. Generates per-email verdicts (PHISH ⚠ or HAM ✓), lists triggered attack indicators, and outputs overall security evaluation metrics (Precision, Recall, F1, Confusion Matrix).
+   Generates human-readable reports and overall security metrics.
 
-## 🛠️ Usage
+---
 
-The project provides an orchestrator script (`main.py`) that supports three different execution modes.
+## 🌐 Chrome Extension Integration (New)
 
-### 1. Demo Mode (No Dataset Required)
-Run a quick, full-pipeline demonstration using built-in synthetic email examples. Ideal for testing without downloading large datasets.
+You can now use this project as a real-time scanner for your actual Gmail inbox.
+
+### 1. Start the API Server
+Ensure you have trained your models (run `python main.py` at least once). Then start the backend:
+```bash
+python app.py
+```
+The API will run at `http://localhost:8000`.
+
+### 2. Install the Extension
+1. Open Chrome and go to `chrome://extensions/`.
+2. Enable **Developer mode**.
+3. Click **Load unpacked** and select the `extension/` folder in this repository.
+4. Refresh your Gmail.
+
+### 3. Features
+- **Real-time Scanning:** Automatically scans emails as you open them.
+- **Premium UI Banner:** Displays a sleek, luxury-themed security verdict (PHISH ⚠ or SECURE ✅) directly in the Gmail interface.
+- **Live Logs:** View detailed threat scores and triggered indicators in your terminal.
+
+---
+
+## 🛠️ CLI Usage
+
+The orchestrator script (`main.py`) supports three execution modes:
+
+### 1. Demo Mode
 ```bash
 python main.py --demo
 ```
 
 ### 2. Single Email Inference
-Classify a specific email file using pre-trained models. (Requires running the full pipeline at least once to save models to the `output/models/` directory).
 ```bash
 python main.py --email "path/to/email.txt"
 ```
 
 ### 3. Full Pipeline Mode
-Run the complete pipeline on a real dataset.
 ```bash
 python main.py
 ```
-*(Note: Full pipeline mode requires raw dataset folders such as `data/easy_ham/easy_ham` and `data/spam_2/spam_2` to be present).*
 
 ## 📊 Outputs
 
-All generated assets are saved to the `output/` directory:
-- `output/models/` - Serialized `.pkl` files of the trained models and TF-IDF vectorizer.
-- `output/train_clean.csv` & `output/test.csv` - Processed datasets.
+- `output/models/` - Serialized `.pkl` files (Model + Vectorizer).
 - `output/threat_report.txt` - Full text report of the classification run.
-- `output/confusion_matrix.png` - Visual evaluation chart of model performance.
+- `output/confusion_matrix.png` - Performance visualization.
 
 ## ⚙️ Requirements
 
-- `numpy`
-- `pandas`
-- `scikit-learn`
+- `fastapi`, `uvicorn` (for the API)
+- `numpy`, `pandas`, `scikit-learn`
 - `beautifulsoup4`
-- `matplotlib`
-- `scipy`
+- `matplotlib`, `scipy`

@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "AI Phishing Detector",
+  "version": "1.0",
+  "description": "Real-time AI-powered phishing detection for Gmail.",
+  "permissions": [
+    "activeTab"
+  ],
+  "host_permissions": [
+    "http://localhost:8000/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://mail.google.com/*"],
+      "js": ["content.js"],
+      "css": ["styles.css"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  }
+}
